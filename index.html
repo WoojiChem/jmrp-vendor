@@ -68,7 +68,7 @@
   <!-- 로그인 -->
   <section id="vLogin" class="card hidden">
     <h2 style="margin-top:0">로그인</h2>
-    <p class="muted">우지케미칼에서 받은 ID · 비밀번호를 넣으세요.</p>
+    <p class="muted">(주)우지에서 받은 ID · 비밀번호를 넣으세요.</p>
     <form id="fLogin" autocomplete="on">
       <label for="lid">ID</label>
       <input id="lid" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
@@ -114,7 +114,7 @@
         <label for="aNote">비고 (없으면 비움)</label>
         <input id="aNote" maxlength="255">
         <button class="primary" type="submit" id="aBtn">넣기</button>
-        <p class="muted" style="margin-bottom:0">넣은 일보는 <b>우지케미칼이 확인한 뒤</b> 반영됩니다. 틀렸으면 '내 기록' 에서 [취소] 하고 다시 넣으세요.</p>
+        <p class="muted" style="margin-bottom:0">넣은 일보는 <b>(주)우지가 확인한 뒤</b> 반영됩니다. 틀렸으면 '내 기록' 에서 [취소] 하고 다시 넣으세요.</p>
       </form>
       <div class="card"><b>오늘 넣은 것</b><div id="today" class="muted">없음</div></div>
     </div>
@@ -135,12 +135,12 @@
         <label for="bMon">달</label>
         <input id="bMon" type="month">
         <button class="primary" type="button" id="bShow">보기</button>
-        <p class="muted" style="margin-bottom:0">우지케미칼이 <b>반영한</b> 일보만 셉니다. 기말이 마이너스 (빨강) 이면 빠진 일보가 있는지 봐 주세요.</p>
+        <p class="muted" style="margin-bottom:0">(주)우지가 <b>반영한</b> 일보만 셉니다. 기말이 마이너스 (빨강) 이면 빠진 일보가 있는지 봐 주세요.</p>
       </div>
       <div id="balList"></div>
     </div>
   </section>
-  <p class="foot">우지케미칼 JMRP · 문의는 우지케미칼 구매 담당</p>
+  <p class="foot">(주)우지 JMRP · 문의는 (주)우지 구매 담당</p>
 </main>
 
 <script>
@@ -224,7 +224,7 @@ function mainView() {
   const min = new Date(t); min.setDate(min.getDate() - (me.back_days || 7));
   $("aDt").value = me.today; $("aDt").max = me.today; $("aDt").min = ymd(min);
   const sel = $("aMold"), keep = sel.value;
-  sel.innerHTML = me.molds.length ? "" : '<option value="">(넣을 금형이 없습니다 — 우지케미칼에 문의)</option>';
+  sel.innerHTML = me.molds.length ? "" : '<option value="">(넣을 금형이 없습니다 — (주)우지에 문의)</option>';
   for (const m of me.molds) {
     const o = document.createElement("option");
     o.value = m.mold_no;
@@ -337,7 +337,7 @@ async function loadBal() {
           + "</td><td>" + num(x.qty_out) + "</td><td>" + num(x.qty_bad) + "</td><td" + (Number(x.closing) < 0 ? ' class="neg"' : "") + ">"
           + num(x.closing) + "</td></tr>";
       }
-      h += "</table>" + (by[k].rows.some((x) => Number(x.qty_adj)) ? '<p class="muted">조정 (우지케미칼) 포함</p>' : "") + "</div>";
+      h += "</table>" + (by[k].rows.some((x) => Number(x.qty_adj)) ? '<p class="muted">조정 (우지) 포함</p>' : "") + "</div>";
     }
     box.innerHTML = h || '<div class="card muted">이 달 반영된 일보가 없습니다.</div>';
   } catch (e) { box.innerHTML = '<div class="card">' + esc(e.message) + "</div>"; }
@@ -381,7 +381,7 @@ $("fAdd").onsubmit = async (ev) => {
   $("aBtn").disabled = true;
   try {
     const r = await call("add", { flow });
-    say("넣었습니다 (번호 " + r.id + ") — 우지케미칼이 확인하면 반영됩니다." + (r.dup ? " 같은 날 같은 일보가 이미 있습니다 (두 번 넣었으면 하나를 취소하세요)." : ""), r.dup ? "warn" : "ok");
+    say("넣었습니다 (번호 " + r.id + ") — (주)우지가 확인하면 반영됩니다." + (r.dup ? " 같은 날 같은 일보가 이미 있습니다 (두 번 넣었으면 하나를 취소하세요)." : ""), r.dup ? "warn" : "ok");
     for (const [key, , , type] of FIELDS[kind]) { if (type !== "select") $("q_" + key).value = ""; }
     $("aNote").value = "";
     loadToday();
